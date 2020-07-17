@@ -75,3 +75,7 @@ class PostAdmin(admin.ModelAdmin):
         obj.owner = request.user
         return super(PostAdmin,self).save_model(request,obj,form,change)
 
+    def get_queryset(self, request):
+        qs = super(PostAdmin, self).get_queryset(request)
+        return qs.filter(owner=request.user)
+
