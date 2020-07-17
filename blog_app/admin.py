@@ -26,6 +26,22 @@ class TagAdmin(admin.ModelAdmin):
         return super(TagAdmin,self).save_model(request,obj,form,change)
 
 
+class CategoryOwnerFilter(admin.SimpleListFilter):
+    '''自定义过滤器只展示当前用户分类'''
+
+    title = '分类过滤器'
+    parameter_name = 'owner_categoryTest1'
+
+    def lookups(self, request, model_admin):
+        return Category.objects.filter(owner=request.user).values_list('id','name')
+
+    def queryset(self, request, queryset):
+        category_id = self.value()
+        if category_id:
+            return queryset.filter(category_id=self.value())
+        return queryset
+
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = [
@@ -34,7 +50,7 @@ class PostAdmin(admin.ModelAdmin):
     ]
     list_display_links = []
 
-    list_filter = ['category',]
+    list_filter = [CategoryOwnerFilter]
     search_fields = ['title','category__name']
 
     actions_on_top = True
