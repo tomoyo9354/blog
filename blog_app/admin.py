@@ -30,7 +30,7 @@ class TagAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     list_display = [
         'title','category','status',
-        'create_time','operator'
+        'create_time','operator','post_count'
     ]
     list_display_links = []
 
@@ -54,6 +54,11 @@ class PostAdmin(admin.ModelAdmin):
         return format_html('<a href="{}">编辑</a>',reverse('admin:blog_app_post_change',args=(obj.id,)))
 
     operator.short_description = '操作'
+
+    def post_count(self,obj):
+        return obj.post_set.count()
+
+    post_count.short_description = '文章数量'
 
     def save_model(self, request, obj, form, change):
         obj.owner = request.user
