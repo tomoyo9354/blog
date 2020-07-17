@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.utils.html import format_html
 
 from .models import Post,Category,Tag
+from .adminforms import PostAdminForm
 # Register your models here.
 
 
@@ -44,6 +45,7 @@ class CategoryOwnerFilter(admin.SimpleListFilter):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+    form = PostAdminForm
     list_display = [
         'title','category','status',
         'create_time','operator','owner'
