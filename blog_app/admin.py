@@ -4,10 +4,11 @@ from django.utils.html import format_html
 
 from .models import Post,Category,Tag
 from .adminforms import PostAdminForm
+from blog.custom_site import custom_site
 # Register your models here.
 
 
-@admin.register(Category)
+@admin.register(Category,site=custom_site)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name','status','is_nav','create_time')
     fields = ('name','status','is_nav')
@@ -17,7 +18,7 @@ class CategoryAdmin(admin.ModelAdmin):
         return super(CategoryAdmin,self).save_model(request,obj,form,change)
 
 
-@admin.register(Tag)
+@admin.register(Tag,site=custom_site)
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name','status','create_time')
     fields = ('name', 'status')
@@ -43,7 +44,7 @@ class CategoryOwnerFilter(admin.SimpleListFilter):
         return queryset
 
 
-@admin.register(Post)
+@admin.register(Post,site=custom_site)
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
     list_display = [
@@ -69,7 +70,7 @@ class PostAdmin(admin.ModelAdmin):
     )
 
     def operator(self,obj):
-        return format_html('<a href="{}">编辑</a>',reverse('admin:blog_app_post_change',args=(obj.id,)))
+        return format_html('<a href="{}">编辑</a>',reverse('cus_admin:blog_app_post_change',args=(obj.id,)))
 
     operator.short_description = '操作'
 
