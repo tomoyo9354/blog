@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.core.urlresolvers import reverse
+from django.contrib.admin.models import LogEntry
 from django.utils.html import format_html
 
 from .models import Post,Category,Tag
@@ -83,3 +84,7 @@ class PostAdmin(BaseOwnerAdmin):
         qs = super(PostAdmin, self).get_queryset(request)
         return qs.filter(owner=request.user)
 
+
+@admin.register(LogEntry,site=custom_site)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_display = ['object_repr','object_id','action_flag','user','change_message']
