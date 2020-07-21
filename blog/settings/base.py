@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'blog_app',
     'config',
     'comment',
+    'blog',
 )
 
 MIDDLEWARE_CLASSES = (
