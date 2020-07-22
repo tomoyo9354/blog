@@ -22,6 +22,18 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def get_navs(cls):
+        categories = cls.objects.filter(status=cls.STATUS_NORMAL)
+        nav_categories = []
+        normal_categories = []
+        for cate in categories:
+            if cate.is_nav:
+                nav_categories.append(cate)
+            else:
+                normal_categories.append(cate)
+        return {'navs':nav_categories,'categories':normal_categories}
+
     class Meta:
         verbose_name = '分类'
         verbose_name_plural = '分类'
@@ -93,7 +105,7 @@ class Post(models.Model):
             category = None
             post_list = []
         else:
-            posy_list = category.post_set.filter(status=Post.STATUS_NORMAL).select_related('owner','category')
+            post_list = category.post_set.filter(status=Post.STATUS_NORMAL).select_related('owner','category')
         return post_list,category
 
     @classmethod
