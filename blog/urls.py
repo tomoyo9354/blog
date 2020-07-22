@@ -25,6 +25,6 @@ urlpatterns = [
     url(r'^$',post_list),
     url(r'^category/(?P<category_id>\d+)/$',post_list),
     url(r'^tag/(?P<tag_id>\d+)/$',post_list),
-    url(r'^post/((?P<post_id>)\d+).html$',post_detail),
+    url(r'^post/(?P<post_id>\d+).html$',post_detail),
     url(r'^links/$',links),
 ]
