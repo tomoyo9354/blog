@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from blog.base_admin import BaseOwnerAdmin
 from .models import Link,SideBar
+from blog.custom_site import custom_site
 # Register your models here.
 
 @admin.register(Link)
@@ -14,7 +15,7 @@ class LinkAdmin(BaseOwnerAdmin):
         return super(LinkAdmin,self).save_model(request,obj,form,change)
 
 
-@admin.register(SideBar)
+@admin.register(SideBar,site=custom_site)
 class SideBarAdmin(BaseOwnerAdmin):
     list_display = ('title','display_type','content','created_time')
     fields = ('title','display_type','content')
