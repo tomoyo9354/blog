@@ -56,10 +56,12 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'blog.urls'
 
+THEME = 'default'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'themes',THEME,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
